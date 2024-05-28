@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestorcompeticionsuf5uf6.GestioCompeticionsController">
+    <ChoiceBox fx:id="tipusCompeticio" layoutX="350.0" layoutY="153.0" prefHeight="25.0" prefWidth="130.0" />
+    <TextField fx:id="numEquips" layoutX="350.0" layoutY="191.0" prefHeight="25.0" prefWidth="130.0" />
+    <ChoiceBox fx:id="categoria" layoutX="350.0" layoutY="230.0" prefHeight="25.0" prefWidth="130.0" />
+    <ChoiceBox fx:id="genere" layoutX="350.0" layoutY="271.0" prefHeight="25.0" prefWidth="130.0" />
+    <Button layoutX="268.0" layoutY="371.0" mnemonicParsing="false" onAction="#crearCompeticio" prefHeight="37.0" prefWidth="165.0" text="Crear Competició">
+      <font>
+         <Font name="Arial Bold" size="14.0" />
+      </font></Button>
+    <Button layoutX="29.0" layoutY="371.0" mnemonicParsing="false" onAction="#veureCompeticionsCreades" prefHeight="37.0" prefWidth="165.0" text="Veure Competicions" />
+    <Button layoutX="505.0" layoutY="371.0" mnemonicParsing="false" onAction="#editarCompeticions" prefHeight="37.0" prefWidth="165.0" text="Editar Competicions" />
+    <TextArea fx:id="output" layoutX="74.0" layoutY="432.0" prefHeight="246.0" prefWidth="552.0" />
+   <Label layoutX="254.0" layoutY="155.0" prefHeight="21.0" prefWidth="87.0" text="Tipus:">
+      <font>
+         <Font name="Arial Bold" size="14.0" />
+      </font>
+   </Label>
+   <Label layoutX="254.0" layoutY="193.0" prefHeight="21.0" prefWidth="87.0" text="Num Equips:">
+      <font>
+         <Font name="Arial Bold" size="14.0" />
+      </font></Label>
+   <Label layoutX="254.0" layoutY="232.0" prefHeight="21.0" prefWidth="87.0" text="Categoria:">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Label layoutX="254.0" layoutY="273.0" prefHeight="21.0" prefWidth="87.0" text="Génere:">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Label layoutX="84.0" layoutY="52.0" prefHeight="60.0" prefWidth="532.0" text="Gestor de Competicions FCBQ" textAlignment="CENTER">
+      <font>
+         <Font name="Arial Bold Italic" size="36.0" />
+      </font>
+   </Label>
+</AnchorPane>
