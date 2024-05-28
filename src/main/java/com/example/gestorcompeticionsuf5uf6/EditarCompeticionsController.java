@@ -22,7 +22,7 @@ public class EditarCompeticionsController {
     private final CompeticioDAO competicioDAO = new CompeticioDAO();
 
     @FXML
-    public void initialize() {
+    public void initialize(Competicio competicio) {
         // Configurar el ChoiceBox para mostrar los códigos de las competiciones disponibles
         competicionsChoiceBox.getItems().addAll(competicioDAO.getAvailableCompetitionsCodes());
     }

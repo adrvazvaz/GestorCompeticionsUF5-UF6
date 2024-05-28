@@ -103,7 +103,7 @@ public class GestioCompeticionsController {
             Competicio competicio = competicioDAO.recuperarCompeticioPorCodigo(selectedCodigo);
 
             // Actualizar los campos de la interfaz gráfica con los datos de la competición
-            controller.initData(competicio);
+            controller.initialize(competicio);
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
