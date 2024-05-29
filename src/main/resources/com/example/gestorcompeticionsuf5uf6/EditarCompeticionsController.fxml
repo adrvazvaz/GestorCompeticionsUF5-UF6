@@ -15,7 +15,6 @@
         <HBox spacing="10" />
     </VBox>
     <Button layoutX="337.0" layoutY="323.0" onAction="#guardarCambios" text="Guardar Cambios" />
-    <Button layoutX="152.0" layoutY="323.0" onAction="#cargarDetallesCompeticion" text="Cargar Detalles" />
     <Label layoutX="211.0" layoutY="249.0" text="Génere:" />
     <Label layoutX="211.0" layoutY="200.0" text="Categoría:" />
     <TextField fx:id="numEquipsField" layoutX="212.0" layoutY="167.0" />

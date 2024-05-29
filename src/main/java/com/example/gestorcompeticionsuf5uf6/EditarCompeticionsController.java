@@ -36,6 +36,15 @@ public class EditarCompeticionsController {
 
         List<Integer> competicioCodes = competicioDAO.getAvailableCompetitionsCodes();
         competicionsChoiceBox.getItems().addAll(competicioCodes);
+
+        // Agregar un listener al ChoiceBox para cargar los detalles automáticamente al seleccionar un código
+        competicionsChoiceBox.setOnAction(event -> {
+            try {
+                cargarDetallesCompeticion();
+            } catch (SQLException e) {
+                e.printStackTrace(); // Manejo de errores
+            }
+        });
     }
 
     @FXML
@@ -74,4 +83,5 @@ public class EditarCompeticionsController {
     }
 
 }
+
 
