@@ -4,10 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Objects;
 
 public class GestioCompeticions extends JFrame {
-    private static final int codigo = 0;
+    private static final int CODIGO = 0;
     private JComboBox<String> tipusCompeticio;
     private JTextField numEquips;
     private JComboBox<String> categoria;
@@ -64,16 +63,29 @@ public class GestioCompeticions extends JFrame {
 
         try {
             int numEquipsValue = Integer.parseInt(numEquipsStr);
-            if (Objects.equals(tipus, "Lliga")) {
-                Competicio competicio = new Lliga(codigo, tipus, numEquipsValue, categoriaValue, genereValue);
-            } else {
-                Competicio competicio = new Eliminatoria(numEquipsValue, categoriaValue, genereValue);
+            if (numEquipsValue <= 0) {
+                mostrarMensajeDeError("El número de equipos debe ser un entero positivo.");
+                return;
             }
-
-            output.append("Competició Creada de tipus " + tipus + " amb " + numEquipsValue + " equips, categoria " + categoriaValue + " i gènere " + genereValue + ".\n");
+            if ("Lliga".equals(tipus)) {
+                try {
+                    Lliga lliga = new Lliga(CODIGO, tipus, numEquipsValue, categoriaValue, genereValue);
+                    output.append("Competició Creada de tipus " + tipus + " amb " + numEquipsValue + " equips, categoria " + categoriaValue + " i gènere " + genereValue + ".\n");
+                } catch (Lliga.MaxTeamsExceededException ex) {
+                    mostrarMensajeDeError(ex.getMessage());
+                }
+            } else {
+                Eliminatoria eliminatoria = new Eliminatoria(CODIGO, tipus, numEquipsValue, categoriaValue, genereValue);
+                output.append("Competició Creada de tipus " + tipus + " amb " + numEquipsValue + " equips, categoria " + categoriaValue + " i gènere " + genereValue + ".\n");
+            }
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Número de equips inválido", "Error", JOptionPane.ERROR_MESSAGE);
+            mostrarMensajeDeError("Número de equips inválido");
         }
+    }
+
+
+    private void mostrarMensajeDeError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     public static void main(String[] args) {
@@ -85,3 +97,4 @@ public class GestioCompeticions extends JFrame {
         });
     }
 }
+

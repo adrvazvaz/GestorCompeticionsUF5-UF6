@@ -5,35 +5,42 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Clase que implementa el patrón Singleton para establecer la conexión con la BBDD
+ * Clase que implementa el patrón Singleton para establecer la conexión con la base de datos
  */
 public class ConnectDB {
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/gestiocompeticions";
-    private static final String JDBC_USER = "tu_usuario";
-    private static final String JDBC_PASSWORD = "tu_contraseña";
     private static Connection instance;
+    private static final String URL = "jdbc:mysql://localhost:3306/gestiocompeticions";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "";
 
-    /* Se privatiza el constructor para que no sea posible hacer new ConnectDB()
-       desde otro lugar que no sea esta misma clase */
     private ConnectDB() {}
 
-    /* Para utilizar la única instancia de la clase, se llamará al método estático
-    getInstance(). La primera vez que se llame, instance será null, las siguientes veces
-    se devolverá el objeto Connection ya creado, asegurando así que solo se cree un
-    objeto del tipo Connection */
+    /**
+     * Método para obtener una instancia única de la conexión a la base de datos
+     * @return la conexión a la base de datos
+     * @throws SQLException si ocurre un error al conectar con la base de datos
+     */
     public static Connection getInstance() throws SQLException {
-        if (instance == null) {
-            instance = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
-            System.out.println("Open Database");
+        if (instance == null || instance.isClosed()) {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                instance = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+                System.out.println("Conexión establecida con la base de datos");
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException("Error al cargar el controlador JDBC", e);
+            }
         }
         return instance;
     }
 
+    /**
+     * Método para cerrar la conexión a la base de datos
+     * @throws SQLException si ocurre un error al cerrar la conexión
+     */
     public static void closeConnection() throws SQLException {
-        if (instance != null) {
+        if (instance != null && !instance.isClosed()) {
             instance.close();
-            System.out.println("Database Closed");
+            System.out.println("Conexión cerrada");
         }
     }
 }
-

@@ -3,10 +3,10 @@ package com.example.gestorcompeticionsuf5uf6;
 public class Competicio {
 
     private final int codigo;
-    private final String tipus;
-    private final int numEquips;
-    private final String categoria;
-    private final String genere;
+    private String tipus;
+    private int numEquips;
+    private String categoria;
+    private String genere;
 
     public Competicio(int codigo, String tipus, int numEquips, String categoria, String genere) {
         this.codigo = codigo;
@@ -47,5 +47,19 @@ public class Competicio {
                 '}';
     }
 
+    public void setTipus(String tipus) {
+        this.tipus = tipus;
+    }
 
+    public void setNumEquips(int numEquips) {
+        this.numEquips = numEquips;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public void setGenere(String genere) {
+        this.genere = genere;
+    }
 }

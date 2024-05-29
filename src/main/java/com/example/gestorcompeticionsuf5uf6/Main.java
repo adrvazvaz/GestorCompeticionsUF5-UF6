@@ -1,7 +1,6 @@
 package com.example.gestorcompeticionsuf5uf6;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,34 +11,28 @@ import java.io.IOException;
 public class Main extends Application {
 
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestioCompeticionsController.fxml"));
+    public void start(Stage primaryStage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GestioCompeticionsController.fxml"));
         Parent root = fxmlLoader.load();
         GestioCompeticionsController gestioCompeticionsController = fxmlLoader.getController();
         gestioCompeticionsController.setMainApp(this);
 
-        Scene scene = new Scene(root, 700, 700);
-        stage.setTitle("Gestor de Competicions FCBQ");
-        stage.setScene(scene);
-        stage.show();
+        primaryStage.setTitle("Gestor de Competicions FCBQ");
+        primaryStage.setScene(new Scene(root, 700, 700));
+        primaryStage.show();
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 
-    public void showVeureCompeticions() {
-        loadFXML("VeureCompeticions.fxml", "Veure Competicions");
-    }
 
-    @FXML
-    private void editarCompeticions() {
+    public void showEditarCompeticions() {
         loadFXML("EditarCompeticionsController.fxml", "Editar Competicions");
     }
 
-    @FXML
-    private void jugarCompeticions() {
-        loadFXML("JugarCompeticions.fxml", "Jugar Competicions");
+    public void showEliminarCompeticio() {
+        loadFXML("EliminarCompeticions.fxml", "Eliminar Competicions");
     }
 
     private void loadFXML(String fxmlFileName, String windowTitle) {
@@ -55,5 +48,9 @@ public class Main extends Application {
         }
     }
 
+    public void showVeureCompeticions() {
+        loadFXML("VeureCompeticions.fxml", "Veure Competicions");
+    }
 }
+
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="479.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestorcompeticionsuf5uf6.EliminarCompeticio">
+   <children>
+      <Label layoutX="109.0" layoutY="32.0" text="ELIMINAR COMPETICIONS">
+         <font>
+            <Font name="Arial Black" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="141.0" layoutY="80.0" text="Codi de Competicio a Eliminar: ">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="128.0" layoutY="127.0" text="Informació de competició a Eliminar:">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="choiceBoxCodi" layoutX="165.0" layoutY="96.0" prefWidth="150.0" />
+      <ScrollPane fx:id="scrollPaneCompeticio" layoutX="133.0" layoutY="150.0" prefHeight="149.0" prefWidth="215.0">
+         <content>
+            <Label fx:id="labelCompeticio" />
+         </content>
+      </ScrollPane>
+      <Button layoutX="178.0" layoutY="319.0" mnemonicParsing="false" text="Eliminar Competición" onAction="#eliminarCompeticio"/>
+   </children>
+</AnchorPane>

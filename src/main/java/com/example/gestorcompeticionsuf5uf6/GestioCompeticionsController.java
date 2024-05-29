@@ -30,6 +30,8 @@ public class GestioCompeticionsController {
     @FXML
     private TableView<Competicio> tablaCompeticions;
 
+    private final CompeticioDAO competicioDAO = new CompeticioDAO();
+
     @FXML
     public void initialize() {
         tipusCompeticio.getItems().addAll("Lliga", "Eliminatòria");
@@ -43,19 +45,18 @@ public class GestioCompeticionsController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("VeureCompeticions.fxml"));
             Parent root = loader.load();
 
-            output.clear();
-            output.appendText("Contingut de Veure Competicions:\n\n");
-
             VeureCompeticionsController controller = loader.getController();
-            String content = "";
-            for (Competicio competicio : GestorCompeticions.getCompeticions()) {
-                content += competicio.toString() + "\n";
-            }
-            output.appendText(content);
+            controller.mostrarCompeticions();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Veure Competicions");
+            stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            mostrarAlerta("Error", "Error al carregar la vista", "Hi ha hagut un error al carregar la vista de les competicions.");
         }
     }
+
 
     @FXML
     public void crearCompeticio() {
@@ -71,76 +72,63 @@ public class GestioCompeticionsController {
             GestorCompeticions.addCompeticio(competicio);
 
             // Guardar la competició a la base de dades
-            CompeticioDAO competicioDAO = new CompeticioDAO();
             competicioDAO.guardarCompeticio(competicio);
 
             mostrarAlerta("Èxit", "Competició Creada", "La competició s'ha creat correctament.");
             netejarCamps();
         } catch (NumberFormatException e) {
             mostrarAlerta("Error", "Número d'Equips Invàlid", "Si us plau, ingressa un número vàlid per al número d'equips.");
+        } catch (Exception ex) {
+            mostrarAlerta("Error", "Error al crear la competició", "Hi ha hagut un error al crear la competició: " + ex.getMessage());
         }
     }
 
     @FXML
-    private void editarCompeticions(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("EditarCompeticionsController.fxml"));
-            Parent root = loader.load();
-            EditarCompeticionsController controller = loader.getController();
+    private void veureCompeticions() {
+        Main mainApp = new Main();
+        mainApp.showVeureCompeticions();
+    }
 
-            // Obtener la competición seleccionada desde la tabla
-            Competicio selectedCompeticio = tablaCompeticions.getSelectionModel().getSelectedItem();
-            if (selectedCompeticio == null) {
-                mostrarAlerta("Error", "Competició no Seleccionada", "Si us plau, selecciona una competició per editar.");
-                return;
+    @FXML
+    private void editarCompeticions() {
+        Main mainApp = new Main();
+        mainApp.showEditarCompeticions();
+    }
+    @FXML
+    private void editarCompeticio(ActionEvent event) {
+        Competicio selectedCompeticio = tablaCompeticions.getSelectionModel().getSelectedItem();
+        if (selectedCompeticio != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("EditarCompeticionsController.fxml"));
+                Parent root = loader.load();
+                EditarCompeticionsController controller = loader.getController();
+                controller.initData(selectedCompeticio); // Puedes pasar datos adicionales si es necesario
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Editar Competiciones");
+                stage.show();
+            } catch (IOException e) {
+                mostrarAlerta("Error", "Error al cargar la vista", "Ha ocurrido un error al cargar la vista de edición de competiciones: " + e.getMessage());
             }
+        } else {
+            mostrarAlerta("Error", "Ninguna competición seleccionada", "Por favor, selecciona una competición para editar.");
+        }
+    }
 
-            // Obtener el código de la competición seleccionada
-            int selectedCodigo = selectedCompeticio.getCodigo();
-
-            // Cargar los datos de la competición desde la base de datos
-            CompeticioDAO competicioDAO = new CompeticioDAO();
-            Competicio competicio = competicioDAO.recuperarCompeticioPorCodigo(selectedCodigo);
-
-            // Actualizar los campos de la interfaz gráfica con los datos de la competición
-            controller.initialize(competicio);
-
+    @FXML
+    private void eliminarCompeticio() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("EliminarCompeticio.fxml"));
+            Parent root = loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("Editar Competicions");
+            stage.setTitle("Eliminar Competiciones");
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            mostrarAlerta("Error", "Error al cargar la vista", "Ha ocurrido un error al cargar la vista de eliminación de competiciones: " + e.getMessage());
         }
     }
 
-    @FXML
-    public void jugarCompeticio(ActionEvent actionEvent) {
-        String tipus = tipusCompeticio.getValue();
-        String numEquipsStr = numEquips.getText();
-        String cat = categoria.getValue();
-        String gen = genere.getValue();
-
-        if (tipus == null || numEquipsStr.isEmpty() || cat == null || gen == null) {
-            mostrarAlerta("Error", "Falten Dades", "Si us plau, completa tots els camps abans de jugar la competició.");
-            return;
-        }
-
-        try {
-            int numEquipsValue = Integer.parseInt(numEquipsStr);
-
-            if (tipus.equals("Lliga")) {
-                CompeticioDAO competicioDAO = new CompeticioDAO();
-                int codigo = tablaCompeticions.getSelectionModel().getSelectedItem().getCodigo();
-                jugarLliga(codigo, tipus, numEquipsValue, cat, gen);
-            } else if (tipus.equals("Eliminatòria")) {
-                jugarEliminatoria(numEquipsValue, cat, gen);
-            }
-            netejarCamps();
-        } catch (NumberFormatException e) {
-            mostrarAlerta("Error", "Número d'Equips Invàlid", "Si us plau, ingressa un número vàlid per al número d'equips.");
-        }
-    }
 
     private void mostrarAlerta(String title, String header, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -157,17 +145,8 @@ public class GestioCompeticionsController {
         genere.getSelectionModel().clearSelection();
     }
 
-    private void jugarLliga(int codigo, String tipus, int numEquipsValue, String cat, String gen) {
-        Lliga lliga = new Lliga(codigo, tipus, numEquipsValue, cat, gen);
-    }
-
-    private void jugarEliminatoria(int numEquipsValue, String cat, String gen) {
-        Eliminatoria eliminatoria = new Eliminatoria(numEquipsValue, cat, gen);
-    }
-
     public void setMainApp(Main main) {
     }
 }
-
 
 
