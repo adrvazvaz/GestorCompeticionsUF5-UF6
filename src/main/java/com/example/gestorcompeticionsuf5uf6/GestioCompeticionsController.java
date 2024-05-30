@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class GestioCompeticionsController {
 
@@ -53,7 +54,7 @@ public class GestioCompeticionsController {
             stage.setTitle("Veure Competicions");
             stage.show();
         } catch (IOException e) {
-            mostrarAlerta("Error", "Error al carregar la vista", "Hi ha hagut un error al carregar la vista de les competicions.");
+            mostrarAlerta("Error", "Error al carregar la vista", "Hi ha hagut un error al carregar la vista de les competicions.", Alert.AlertType.INFORMATION);
         }
     }
 
@@ -74,12 +75,12 @@ public class GestioCompeticionsController {
             // Guardar la competició a la base de dades
             competicioDAO.guardarCompeticio(competicio);
 
-            mostrarAlerta("Èxit", "Competició Creada", "La competició s'ha creat correctament.");
+            mostrarAlerta("Èxit", "Competició Creada", "La competició s'ha creat correctament.", Alert.AlertType.INFORMATION);
             netejarCamps();
         } catch (NumberFormatException e) {
-            mostrarAlerta("Error", "Número d'Equips Invàlid", "Si us plau, ingressa un número vàlid per al número d'equips.");
+            mostrarAlerta("Error", "Número d'Equips Invàlid", "Si us plau, ingressa un número vàlid per al número d'equips.", Alert.AlertType.INFORMATION);
         } catch (Exception ex) {
-            mostrarAlerta("Error", "Error al crear la competició", "Hi ha hagut un error al crear la competició: " + ex.getMessage());
+            mostrarAlerta("Error", "Error al crear la competició", "Hi ha hagut un error al crear la competició: " + ex.getMessage(), Alert.AlertType.INFORMATION);
         }
     }
 
@@ -108,29 +109,35 @@ public class GestioCompeticionsController {
                 stage.setTitle("Editar Competiciones");
                 stage.show();
             } catch (IOException e) {
-                mostrarAlerta("Error", "Error al cargar la vista", "Ha ocurrido un error al cargar la vista de edición de competiciones: " + e.getMessage());
+                mostrarAlerta("Error", "Error al cargar la vista", "Ha ocurrido un error al cargar la vista de edición de competiciones: " + e.getMessage(), Alert.AlertType.INFORMATION);
             }
         } else {
-            mostrarAlerta("Error", "Ninguna competición seleccionada", "Por favor, selecciona una competición para editar.");
+            mostrarAlerta("Error", "Ninguna competición seleccionada", "Por favor, selecciona una competición para editar.", Alert.AlertType.INFORMATION);
         }
     }
 
     @FXML
     private void eliminarCompeticio() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("EliminarCompeticio.fxml"));
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Eliminar Competiciones");
-            stage.show();
-        } catch (IOException e) {
-            mostrarAlerta("Error", "Error al cargar la vista", "Ha ocurrido un error al cargar la vista de eliminación de competiciones: " + e.getMessage());
+            CompeticioDAO competicioDAO = new CompeticioDAO();
+            if (competicioDAO.getAvailableCompetitionsCodes().isEmpty()) {
+                mostrarAlerta("No hay competiciones", "No hay competiciones disponibles para eliminar.", "No hay mucho trabajo por aqui!!", Alert.AlertType.INFORMATION);
+            } else {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("EliminarCompeticio.fxml"));
+                Parent root = loader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Eliminar Competiciones");
+                stage.show();
+            }
+        } catch (IOException | SQLException e) {
+            mostrarAlerta("Error", "Error al cargar la vista", "Ha ocurrido un error al cargar la vista de eliminación de competiciones: " + e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
         }
     }
 
 
-    private void mostrarAlerta(String title, String header, String content) {
+    private void mostrarAlerta(String title, String header, String content, Alert.AlertType information) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(header);

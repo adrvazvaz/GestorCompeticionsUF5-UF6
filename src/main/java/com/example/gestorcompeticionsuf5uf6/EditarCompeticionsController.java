@@ -2,6 +2,7 @@ package com.example.gestorcompeticionsuf5uf6;
 
 import com.example.utilities.CompeticioDAO;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 
@@ -35,17 +36,29 @@ public class EditarCompeticionsController {
         genereChoiceBox.getItems().addAll("Masculí", "Femení");
 
         List<Integer> competicioCodes = competicioDAO.getAvailableCompetitionsCodes();
-        competicionsChoiceBox.getItems().addAll(competicioCodes);
-
-        // Agregar un listener al ChoiceBox para cargar los detalles automáticamente al seleccionar un código
-        competicionsChoiceBox.setOnAction(event -> {
-            try {
-                cargarDetallesCompeticion();
-            } catch (SQLException e) {
-                e.printStackTrace(); // Manejo de errores
-            }
-        });
+        if (competicioCodes.isEmpty()) {
+            mostrarAlerta("¡No hay mucho trabajo que hacer por aquí!");
+        } else {
+            competicionsChoiceBox.getItems().addAll(competicioCodes);
+            competicionsChoiceBox.setOnAction(event -> {
+                try {
+                    cargarDetallesCompeticion();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
     }
+
+    private void mostrarAlerta(String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Aviso");
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
+
+
 
     @FXML
     private void cargarDetallesCompeticion() throws SQLException {
