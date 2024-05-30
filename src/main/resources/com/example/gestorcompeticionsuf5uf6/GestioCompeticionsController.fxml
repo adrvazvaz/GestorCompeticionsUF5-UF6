@@ -4,48 +4,48 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="700.0" style="-fx-background-image: url(&quot;../imagenes/fondo1.jpg&quot;);" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestorcompeticionsuf5uf6.GestioCompeticionsController">
-    <ChoiceBox fx:id="tipusCompeticio" layoutX="341.0" layoutY="249.0" prefHeight="25.0" prefWidth="130.0" />
-    <TextField fx:id="numEquips" layoutX="341.0" layoutY="296.0" prefHeight="25.0" prefWidth="130.0" />
-    <ChoiceBox fx:id="categoria" layoutX="341.0" layoutY="338.0" prefHeight="25.0" prefWidth="130.0" />
-    <ChoiceBox fx:id="genere" layoutX="341.0" layoutY="383.0" prefHeight="25.0" prefWidth="130.0" />
-    <Button layoutX="230.0" layoutY="431.0" mnemonicParsing="false" onAction="#crearCompeticio" prefHeight="50.0" prefWidth="241.0" text="Crear Competició">
+<AnchorPane prefHeight="700.0" prefWidth="700.0" styleClass="anchor-pane" stylesheets="@css/gestio.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestorcompeticionsuf5uf6.GestioCompeticionsController">
+    <ChoiceBox fx:id="tipusCompeticio" layoutX="341.0" layoutY="249.0" prefHeight="27.0" prefWidth="130.0" />
+    <TextField fx:id="numEquips" layoutX="341.0" layoutY="296.0" prefHeight="27.0" prefWidth="130.0" styleClass="bottonGris" />
+    <ChoiceBox fx:id="categoria" layoutX="341.0" layoutY="338.0" prefHeight="27.0" prefWidth="130.0" />
+    <ChoiceBox fx:id="genere" layoutX="341.0" layoutY="383.0" prefHeight="27.0" prefWidth="130.0" />
+    <Button layoutX="230.0" layoutY="431.0" mnemonicParsing="false" onAction="#crearCompeticio" prefHeight="50.0" prefWidth="241.0" styleClass="buttonGris" text="Crear Competició">
       <font>
          <Font name="Arial Bold Italic" size="18.0" />
       </font></Button>
-    <Button layoutX="54.0" layoutY="526.0" mnemonicParsing="false" onAction="#veureCompeticionsCreades" prefHeight="37.0" prefWidth="165.0" text="Veure Competicións">
+    <Button layoutX="54.0" layoutY="526.0" mnemonicParsing="false" onAction="#veureCompeticionsCreades" prefHeight="37.0" prefWidth="165.0" styleClass="buttonGris" text="Veure Competicións">
       <font>
          <Font name="Arial Bold Italic" size="14.0" />
       </font></Button>
-    <Button layoutX="480.0" layoutY="526.0" mnemonicParsing="false" onAction="#editarCompeticions" prefHeight="37.0" prefWidth="165.0" text="Editar Competicions">
+    <Button layoutX="480.0" layoutY="526.0" mnemonicParsing="false" onAction="#editarCompeticions" prefHeight="37.0" prefWidth="165.0" styleClass="buttonGris" text="Editar Competicions">
       <font>
          <Font name="Arial Bold Italic" size="14.0" />
       </font></Button>
-   <Label layoutX="230.0" layoutY="251.0" prefHeight="21.0" prefWidth="105.0" text="Tipus:">
+   <Label layoutX="230.0" layoutY="251.0" prefHeight="27.0" prefWidth="105.0" styleClass="labelChulo" text="Tipus:">
       <font>
          <Font name="Arial Bold" size="18.0" />
       </font>
    </Label>
-   <Label layoutX="230.0" layoutY="298.0" prefHeight="21.0" prefWidth="105.0" text="Equips:">
+   <Label layoutX="230.0" layoutY="298.0" prefHeight="27.0" prefWidth="105.0" styleClass="labelChulo" text="Equips:">
       <font>
          <Font name="Arial Bold" size="18.0" />
       </font></Label>
-   <Label layoutX="230.0" layoutY="340.0" prefHeight="21.0" prefWidth="105.0" text="Categoria:">
+   <Label layoutX="230.0" layoutY="340.0" prefHeight="27.0" prefWidth="105.0" styleClass="labelChulo" text="Categoria:">
       <font>
          <Font name="Arial Bold" size="18.0" />
       </font>
    </Label>
-   <Label layoutX="230.0" layoutY="382.0" prefHeight="27.0" prefWidth="105.0" text="Génere:">
+   <Label layoutX="230.0" layoutY="382.0" prefHeight="27.0" prefWidth="105.0" styleClass="labelChulo" text="Génere:">
       <font>
          <Font name="System Bold" size="18.0" />
       </font>
    </Label>
-   <Label layoutX="84.0" layoutY="138.0" prefHeight="60.0" prefWidth="532.0" text="Gestor de Competicions FCBQ" textAlignment="CENTER">
+   <Label layoutX="84.0" layoutY="138.0" prefHeight="60.0" prefWidth="559.0" styleClass="labelChulo" text="Gestor de Competicions FCBQ" textAlignment="CENTER">
       <font>
-         <Font name="Arial" size="36.0" />
+         <Font name="Arial Black" size="33.0" />
       </font>
    </Label>
-    <Button layoutX="268.0" layoutY="526.0" mnemonicParsing="false" onAction="#eliminarCompeticio" prefHeight="37.0" prefWidth="171.0" text="Eliminar Competicións">
+    <Button layoutX="268.0" layoutY="526.0" mnemonicParsing="false" onAction="#eliminarCompeticio" prefHeight="37.0" prefWidth="177.0" styleClass="buttonGris" text="Eliminar Competicións">
       <font>
          <Font name="Arial Bold Italic" size="14.0" />
       </font></Button>

@@ -11,11 +11,11 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class GestioCompeticionsController {
 
@@ -74,7 +74,6 @@ public class GestioCompeticionsController {
 
             GestorCompeticions.addCompeticio(competicio);
 
-            // Guardar la competició a la base de dades
             competicioDAO.guardarCompeticio(competicio);
 
             mostrarAlerta("Èxit", "Competició Creada", "La competició s'ha creat correctament.", Alert.AlertType.INFORMATION);
@@ -98,14 +97,22 @@ public class GestioCompeticionsController {
         mainApp.showEditarCompeticions();
     }
     @FXML
-    private void editarCompeticio(ActionEvent event) {
+    public void editarCompeticio(ActionEvent event) throws SQLException {
         Competicio selectedCompeticio = tablaCompeticions.getSelectionModel().getSelectedItem();
-        if (selectedCompeticio != null) {
+        List<Integer> competicioCodes = competicioDAO.getAvailableCompetitionsCodes();
+        boolean mostrarStage = true;
+
+        if (competicioCodes.isEmpty()) {
+            mostrarAlerta();
+            mostrarStage = false;
+        }
+
+        if (mostrarStage && selectedCompeticio != null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("EditarCompeticionsController.fxml"));
                 Parent root = loader.load();
                 EditarCompeticionsController controller = loader.getController();
-                controller.initData(selectedCompeticio); // Puedes pasar datos adicionales si es necesario
+                controller.initData(selectedCompeticio);
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
                 stage.setTitle("Editar Competiciones");
@@ -113,9 +120,17 @@ public class GestioCompeticionsController {
             } catch (IOException e) {
                 mostrarAlerta("Error", "Error al cargar la vista", "Ha ocurrido un error al cargar la vista de edición de competiciones: " + e.getMessage(), Alert.AlertType.INFORMATION);
             }
-        } else {
+        } else if (mostrarStage) {
             mostrarAlerta("Error", "Ninguna competición seleccionada", "Por favor, selecciona una competición para editar.", Alert.AlertType.INFORMATION);
         }
+    }
+
+    private void mostrarAlerta() {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Aviso");
+        alerta.setHeaderText(null);
+        alerta.setContentText("¡No hay mucho trabajo que hacer por aquí!");
+        alerta.showAndWait();
     }
 
     @FXML

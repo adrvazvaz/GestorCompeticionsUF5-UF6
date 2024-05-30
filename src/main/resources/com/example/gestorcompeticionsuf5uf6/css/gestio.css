@@ -1,0 +1,18 @@
+
+.anchor-pane {
+    -fx-background-image: url("../imagenes/fondo1.jpg");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+}
+
+.labelChulo{
+    -fx-background-color: rgba(255,255,255,0.75);
+}
+
+.button.buttonGris {
+    -fx-background-color: #4B4B4B; /* Color de fondo gris oscuro */
+    -fx-border-color: #4B4B4B; /* Color del borde gris oscuro */
+    -fx-border-radius: 5; /* Bordes redondeados */
+    -fx-background-radius: 5; /* Fondo redondeado */
+    -fx-text-fill: white; /* Color del texto blanco para contraste */
+}

@@ -59,7 +59,6 @@ public class EditarCompeticionsController {
     }
 
 
-
     @FXML
     private void cargarDetallesCompeticion() throws SQLException {
         Integer selectedCodi = competicionsChoiceBox.getValue();
