@@ -37,7 +37,7 @@ public class EditarCompeticionsController {
 
         List<Integer> competicioCodes = competicioDAO.getAvailableCompetitionsCodes();
         if (competicioCodes.isEmpty()) {
-            mostrarAlerta("¡No hay mucho trabajo que hacer por aquí!");
+            mostrarAlerta();
         } else {
             competicionsChoiceBox.getItems().addAll(competicioCodes);
             competicionsChoiceBox.setOnAction(event -> {
@@ -50,11 +50,11 @@ public class EditarCompeticionsController {
         }
     }
 
-    private void mostrarAlerta(String mensaje) {
+    private void mostrarAlerta() {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setTitle("Aviso");
         alerta.setHeaderText(null);
-        alerta.setContentText(mensaje);
+        alerta.setContentText("¡No hay mucho trabajo que hacer por aquí!");
         alerta.showAndWait();
     }
 
