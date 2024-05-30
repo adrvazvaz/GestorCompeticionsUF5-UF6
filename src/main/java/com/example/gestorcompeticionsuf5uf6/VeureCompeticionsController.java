@@ -18,7 +18,6 @@ public class VeureCompeticionsController {
         List<Competicio> competicions = competicioDAO.getAllCompeticions();
         if (competicions.isEmpty()) {
             mostrarNotificacion("No hay competiciones disponibles.", Alert.AlertType.INFORMATION);
-            return; // Detiene la ejecución del método aquí si no hay competiciones
         } else {
             mostrarCompetitions(competicions);
         }
